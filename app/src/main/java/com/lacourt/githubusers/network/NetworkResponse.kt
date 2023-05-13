@@ -1,20 +1,25 @@
 package com.lacourt.githubusers.network
 
+import java.io.IOException
+
 sealed class NetworkResponse<out T : Any, out U : Any> {
     /**
-     * Para o caso de uma resposta com sucesso
+     * Success response with body
      */
     data class Success<T : Any>(val body: T) : NetworkResponse<T, Nothing>()
 
     /**
-     * Para o caso de uma resposta com erro
+     * Failure response with body
      */
     data class ApiError<U : Any>(val body: U, val code: Int) : NetworkResponse<Nothing, U>()
 
+    /**
+     * Network error
+     */
+    data class NetworkError(val error: IOException) : NetworkResponse<Nothing, Nothing>()
 
     /**
-     * Para o caso de uma exception antes de obter uma resposta
-     *como por exemplo, IOException e UnknownHostException
+     * For example, json parsing error
      */
-    data class Exception(val error: Throwable?) : NetworkResponse<Nothing, Nothing>()
+    data class UnknownError(val error: Throwable?) : NetworkResponse<Nothing, Nothing>()
 }

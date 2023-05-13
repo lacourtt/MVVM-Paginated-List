@@ -1,6 +1,4 @@
-package com.lacourt.githubusers.view.dto
-
-import com.lacourt.githubusers.network.License
+package com.lacourt.githubusers.network.dto
 
 data class UserRepository(
     val id: Long,

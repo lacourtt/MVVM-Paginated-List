@@ -1,4 +1,4 @@
-package com.lacourt.githubusers.view.dto
+package com.lacourt.githubusers.network.dto
 
 data class User(
     val login: String,

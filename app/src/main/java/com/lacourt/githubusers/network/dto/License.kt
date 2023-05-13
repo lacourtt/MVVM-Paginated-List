@@ -1,4 +1,4 @@
-package com.lacourt.githubusers.network
+package com.lacourt.githubusers.network.dto
 
 data class License(
     val key: String,
