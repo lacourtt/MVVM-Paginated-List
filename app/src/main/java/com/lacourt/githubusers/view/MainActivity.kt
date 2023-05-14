@@ -2,7 +2,6 @@ package com.lacourt.githubusers.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.Observer
 import com.lacourt.githubusers.R
 import com.lacourt.githubusers.viewmodel.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel

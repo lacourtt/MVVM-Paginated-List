@@ -1,6 +1,6 @@
 package com.lacourt.githubusers.network.dto
 
-data class User(
+data class UserListedDTO(
     val login: String,
     val id: Int,
     val node_id: String,
@@ -18,19 +18,5 @@ data class User(
     val events_url: String,
     val received_events_url: String,
     val type: String,
-    val site_admin: Boolean,
-    val name: String,
-    val company: String,
-    val blog: String,
-    val location: String,
-    val email: String?,
-    val hireable: Boolean?,
-    val bio: String?,
-    val twitter_username: String?,
-    val public_repos: Int,
-    val public_gists: Int,
-    val followers: Int,
-    val following: Int,
-    val created_at: String,
-    val updated_at: String
+    val site_admin: Boolean
 )

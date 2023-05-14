@@ -1,6 +1,6 @@
 package com.lacourt.githubusers.network.dto
 
-data class Owner(
+data class OwnerDTO(
     val login: String,
     val id: Long,
     val nodeId: String,

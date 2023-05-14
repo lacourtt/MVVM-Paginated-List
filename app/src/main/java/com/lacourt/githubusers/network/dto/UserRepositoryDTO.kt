@@ -1,12 +1,12 @@
 package com.lacourt.githubusers.network.dto
 
-data class UserRepository(
+data class UserRepositoryDTO(
     val id: Long,
     val nodeId: String,
     val name: String,
     val fullName: String,
     val private: Boolean,
-    val owner: Owner,
+    val owner: OwnerDTO,
     val htmlUrl: String,
     val description: String,
     val fork: Boolean,
@@ -70,7 +70,7 @@ data class UserRepository(
     val archived: Boolean,
     val disabled: Boolean,
     val openIssuesCount: Int,
-    val license: License,
+    val license: LicenseDTO,
     val allowForking: Boolean,
     val isTemplate: Boolean,
     val webCommitSignoffRequired: Boolean,

@@ -1,6 +1,6 @@
 package com.lacourt.githubusers.network.dto
 
-data class License(
+data class LicenseDTO(
     val key: String,
     val name: String,
     val spdxId: String,
