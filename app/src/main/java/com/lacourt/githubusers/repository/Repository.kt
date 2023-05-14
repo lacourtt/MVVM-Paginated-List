@@ -11,7 +11,7 @@ import com.lacourt.githubusers.network.dto.UserListedDTO
 
 class Repository(private val service: GithubApiService) {
     suspend fun fetchUsersList(): List<UserListed>? {
-        val response = service.getUserList()
+        val response = service.getUserList(0, 25)
         return when(response) {
             is Success -> response.body.asDomainModel()
             is ApiError -> null
