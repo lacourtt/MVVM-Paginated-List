@@ -15,9 +15,25 @@ internal class NetworkResponseCall<S : Any, E : Any>(
     override fun enqueue(callback: Callback<NetworkResponse<S, E>>) {
         return delegate.enqueue(object : Callback<S> {
             override fun onResponse(call: Call<S>, response: Response<S>) {
-                val body = response.body()
+                var body = response.body()
                 val code = response.code()
                 val error = response.errorBody()
+                val url = response.raw().request().url().toString()
+
+                if(url.contains("users?since=")) {
+                    if (response.headers().size() > 0) {
+                        val headers = response.headers()
+                        val link = headers.get("Link")
+                        if (link != null) {
+                            val next = link.split(",").first { it.contains("rel=\"next\"") }
+                            val nextUrl = next.split(";").first().replace("<", "").replace(">", "")
+                            body = body?.let {
+                                it as List<*>
+                                it + nextUrl
+                            } as S
+                        }
+                    }
+                }
 
                 if (response.isSuccessful) {
                     if (body != null) {
