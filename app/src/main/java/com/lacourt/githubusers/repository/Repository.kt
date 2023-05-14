@@ -7,7 +7,6 @@ import com.lacourt.githubusers.network.NetworkResponse.Success
 import com.lacourt.githubusers.network.NetworkResponse.ApiError
 import com.lacourt.githubusers.network.NetworkResponse.NetworkError
 import com.lacourt.githubusers.network.NetworkResponse.UnknownError
-import com.lacourt.githubusers.network.dto.UserListedDTO
 
 class Repository(private val service: GithubApiService) {
     suspend fun fetchUsersList(): List<UserListed>? {

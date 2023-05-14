@@ -22,16 +22,14 @@ internal class NetworkResponseCall<S : Any, E : Any>(
 
                 if(url.contains("users?since=")) {
                     if (response.headers().size() > 0) {
-                        val headers = response.headers()
-                        val link = headers.get("Link")
-                        if (link != null) {
-                            val next = link.split(",").first { it.contains("rel=\"next\"") }
-                            val nextUrl = next.split(";").first().replace("<", "").replace(">", "")
-                            body = body?.let {
-                                it as List<*>
-                                it + nextUrl
-                            } as S
-                        }
+//                        get parameter since from header Link
+                        val link = response.headers().get("Link")
+                        val since = link?.substring(link.indexOf("since=") + 6, link.indexOf(">;"))
+                        body = body as S
+                        callback.onResponse(
+                            this@NetworkResponseCall,
+                            Response.success(NetworkResponse.Success(body))
+                        )
                     }
                 }
 

@@ -4,5 +4,5 @@ data class UserListed(
     val login: String,
     val avatar_url: String
 ) {
-    var nextPage = ""
+    var lastId = 0
 }
