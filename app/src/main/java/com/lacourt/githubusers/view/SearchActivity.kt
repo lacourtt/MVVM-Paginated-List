@@ -5,8 +5,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
@@ -19,7 +18,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class SearchActivity : AppCompatActivity(), SearchAdapter.OnUserClick {
 
     private val viewModel: SearchViewModel by viewModel()
-    private val adapter by lazy { SearchAdapter(this, ArrayList()) }
+    private val searchAdapter by lazy { SearchAdapter(this, ArrayList()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,12 +30,27 @@ class SearchActivity : AppCompatActivity(), SearchAdapter.OnUserClick {
         attachErrorObserver(binding)
         attachVisibilityObserver(binding)
         showKeyBoard(binding)
-        searchTextWatcher()
+        searchClick(binding)
+    }
+
+    private fun searchClick(binding: ActivitySearchBinding) {
+        binding.etSearch.setOnEditorActionListener { textView, i, keyEvent ->
+            return@setOnEditorActionListener when (i) {
+                EditorInfo.IME_ACTION_SEARCH -> {
+                    viewModel.searchMovie(textView.text.toString())
+                    true
+                }
+                else -> false
+            }
+        }
+        binding.ivSearchIcon.setOnClickListener {
+            viewModel.searchMovie(binding.etSearch.text.toString())
+        }
     }
 
     private fun attachSearchObserver() {
         viewModel.searchResult.observe(this) { resultList ->
-            adapter.setList(resultList)
+            searchAdapter.setList(resultList)
         }
     }
 
@@ -61,7 +75,7 @@ class SearchActivity : AppCompatActivity(), SearchAdapter.OnUserClick {
     private fun setupRecyclerView(binding: ActivitySearchBinding) {
         binding.rvSearchedList.apply {
             layoutManager = LinearLayoutManager(this@SearchActivity, LinearLayoutManager.VERTICAL, false)
-            adapter = adapter
+            adapter = searchAdapter
         }
     }
 
@@ -69,18 +83,6 @@ class SearchActivity : AppCompatActivity(), SearchAdapter.OnUserClick {
         binding.etSearch.requestFocus()
         val imgr = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imgr.showSoftInput(binding.etSearch, InputMethodManager.SHOW_IMPLICIT)
-    }
-
-    private fun searchTextWatcher() = object : TextWatcher {
-
-        override fun afterTextChanged(s: Editable) {}
-
-        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-
-        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-            if (s.isNotEmpty())
-                viewModel.searchMovie(s.toString())
-        }
     }
 
     override fun onClick(user: UserListed) {

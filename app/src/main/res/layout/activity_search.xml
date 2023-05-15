@@ -13,6 +13,7 @@
         android:gravity="start|left|center_vertical"
         android:hint="@string/search_hint"
         android:inputType="text"
+        android:imeOptions="actionSearch"
         android:maxLines="1"
         android:paddingLeft="14dp"
         android:paddingEnd="80dp"
@@ -31,7 +32,7 @@
         app:layout_constraintTop_toBottomOf="@+id/et_search" />
 
     <ImageView
-        android:id="@+id/img_search_icon"
+        android:id="@+id/iv_search_icon"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginEnd="12dp"
@@ -47,7 +48,7 @@
         android:layout_height="0dp"
         android:layout_margin="12dp"
         app:layout_constraintBottom_toBottomOf="@+id/et_search"
-        app:layout_constraintEnd_toStartOf="@+id/img_search_icon"
+        app:layout_constraintEnd_toStartOf="@+id/iv_search_icon"
         app:layout_constraintTop_toTopOf="@+id/et_search" />
 
     <TextView
@@ -65,9 +66,12 @@
         android:id="@+id/tv_error"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:errorMessage="@{viewModel.errorMessage}"
-        app:errorScreenVisibility="@{viewModel.errorScreenVisibility}"
+        android:background="@color/white"
+        android:gravity="center"
+        android:paddingHorizontal="30dp"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_search"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        tools:text="@string/search_error" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
