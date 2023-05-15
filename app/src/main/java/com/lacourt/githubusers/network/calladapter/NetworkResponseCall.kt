@@ -6,6 +6,7 @@ import okhttp3.ResponseBody
 import okio.Timeout
 import retrofit2.*
 import java.io.IOException
+import java.net.SocketTimeoutException
 
 internal class NetworkResponseCall<S : Any, E : Any>(
     private val delegate: Call<S>,
@@ -18,20 +19,6 @@ internal class NetworkResponseCall<S : Any, E : Any>(
                 var body = response.body()
                 val code = response.code()
                 val error = response.errorBody()
-                val url = response.raw().request().url().toString()
-
-                if(url.contains("users?since=")) {
-                    if (response.headers().size() > 0) {
-//                        get parameter since from header Link
-                        val link = response.headers().get("Link")
-                        val since = link?.substring(link.indexOf("since=") + 6, link.indexOf(">;"))
-                        body = body as S
-                        callback.onResponse(
-                            this@NetworkResponseCall,
-                            Response.success(NetworkResponse.Success(body))
-                        )
-                    }
-                }
 
                 if (response.isSuccessful) {
                     if (body != null) {
@@ -73,6 +60,7 @@ internal class NetworkResponseCall<S : Any, E : Any>(
             override fun onFailure(call: Call<S>, throwable: Throwable) {
                 val networkResponse = when (throwable) {
                     is IOException -> NetworkResponse.NetworkError(throwable)
+                    is SocketTimeoutException -> NetworkResponse.NetworkError(throwable)
                     else -> NetworkResponse.UnknownError(throwable)
                 }
                 callback.onResponse(this@NetworkResponseCall, Response.success(networkResponse))

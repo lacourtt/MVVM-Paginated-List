@@ -18,10 +18,6 @@ val networkModule = module {
     factory { providesRepository(get()) }
 }
 
-val viewModelModule = module {
-    viewModel { MainViewModel(get()) }
-}
-
 fun providesRepository(service: GithubApiService): Repository {
     return Repository(service)
 }

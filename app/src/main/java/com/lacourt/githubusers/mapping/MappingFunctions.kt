@@ -6,6 +6,7 @@ import com.lacourt.githubusers.network.dto.UserListedDTO
 fun List<UserListedDTO>.asDomainModel() =
     map {
         UserListed(
+            id = it.id,
             login = it.login,
             avatar_url = it.avatar_url
         )
@@ -13,6 +14,7 @@ fun List<UserListedDTO>.asDomainModel() =
 
 fun UserListedDTO.asDomainModel() =
     UserListed(
+        id = id,
         login = login,
         avatar_url = avatar_url
     )

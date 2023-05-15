@@ -1,6 +1,7 @@
 package com.lacourt.githubusers
 
 import android.app.Application
+import com.lacourt.githubusers.di.activityModule
 import com.lacourt.githubusers.di.networkModule
 import com.lacourt.githubusers.di.viewModelModule
 import org.koin.android.BuildConfig
@@ -15,7 +16,7 @@ class MyApp : Application() {
         startKoin {
             androidLogger(if (BuildConfig.DEBUG) Level.ERROR else Level.NONE)
             androidContext(this@MyApp)
-            modules(listOf(networkModule, viewModelModule))
+            modules(listOf(networkModule, activityModule, viewModelModule))
         }
     }
 }

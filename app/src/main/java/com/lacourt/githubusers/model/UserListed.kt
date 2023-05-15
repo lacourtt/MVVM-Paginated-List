@@ -1,8 +1,8 @@
 package com.lacourt.githubusers.model
 
 data class UserListed(
+    val id: Int,
     val login: String,
-    val avatar_url: String
-) {
-    var lastId = 0
-}
+    val avatar_url: String,
+    var lastId: Int = 0
+)
