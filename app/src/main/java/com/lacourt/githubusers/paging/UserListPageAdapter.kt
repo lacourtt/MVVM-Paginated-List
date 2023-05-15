@@ -1,5 +1,6 @@
 package com.lacourt.githubusers.paging
 
+import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -9,7 +10,7 @@ import com.lacourt.githubusers.databinding.UserListItemBinding
 import com.lacourt.githubusers.model.UserListed
 import com.squareup.picasso.Picasso
 
-class UserListPageAdapter : PagingDataAdapter<UserListed, UserListPageAdapter.UserListViewHolder>(DIFF_USER_CALLBACK) {
+class UserListPageAdapter(private val onClick: OnItemClickListener) : PagingDataAdapter<UserListed, UserListPageAdapter.UserListViewHolder>(DIFF_USER_CALLBACK) {
 
     private lateinit var binding: UserListItemBinding
 
@@ -26,8 +27,17 @@ class UserListPageAdapter : PagingDataAdapter<UserListed, UserListPageAdapter.Us
 
     inner class UserListViewHolder : RecyclerView.ViewHolder(binding.root) {
         fun bind(user: UserListed) {
-            binding.tvUserName.text = user.login
-//            Picasso.get().load(user.avatar_url).into(binding.ivUserAvatar)
+            binding.apply {
+                tvUserName.text = user.login
+                root.setOnClickListener {
+                    onClick.onItemClick(user)
+                }
+                Picasso.get()
+                    .load(user.avatar_url)
+                    .fit()
+                    .config(Bitmap.Config.RGB_565)
+                    .into(ivUserAvatar)
+            }
         }
     }
 
@@ -39,6 +49,10 @@ class UserListPageAdapter : PagingDataAdapter<UserListed, UserListPageAdapter.Us
             override fun areContentsTheSame(oldItem: UserListed, newItem: UserListed): Boolean =
                 oldItem == newItem
         }
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(user: UserListed)
     }
 }
 

@@ -30,6 +30,7 @@ fun providesInterceptor(): Interceptor {
 
         val newRequest = chain.request()
             .newBuilder()
+            .addHeader("Authorization", "Bearer ${AppConstants.TOKEN}")
             .url(newUrl)
             .build()
 

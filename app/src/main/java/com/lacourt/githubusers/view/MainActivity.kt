@@ -6,17 +6,16 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.lacourt.githubusers.R
 import com.lacourt.githubusers.databinding.ActivityMainBinding
+import com.lacourt.githubusers.model.UserListed
 import com.lacourt.githubusers.paging.UserListPageAdapter
 import com.lacourt.githubusers.viewmodel.MainViewModel
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), UserListPageAdapter.OnItemClickListener {
     private val viewModel: MainViewModel by viewModel()
 
-    private val userListAdapter by inject<UserListPageAdapter>()
+    private val userListAdapter by lazy { UserListPageAdapter(this) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -35,12 +34,12 @@ class MainActivity : AppCompatActivity() {
                 adapter = userListAdapter
             }
 
-//            lifecycleScope.launchWhenCreated {
-//                userListAdapter.loadStateFlow.collect{
-//                    val state = it.refresh
-//                    pbUserList.isVisible = state is LoadState.Loading
-//                }
-//            }
+            lifecycleScope.launchWhenCreated {
+                userListAdapter.loadStateFlow.collect{
+                    val state = it.refresh
+                    pbUserList.isVisible = state is LoadState.Loading
+                }
+            }
 
             rvUsersList.adapter = userListAdapter.withLoadStateFooter(
                 LoadMoreAdapter{
@@ -49,7 +48,9 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
+    }
 
-
+    override fun onItemClick(user: UserListed) {
+        startActivity(UserDetailsActivity.newIntent(this, user.login))
     }
 }
