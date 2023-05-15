@@ -30,7 +30,7 @@ class SearchViewModel(private val repository: Repository): ViewModel() {
     private var _errorMessage = MutableLiveData<String>()
     var errorMessage: LiveData<String> = _errorMessage
 
-    fun searchMovie(username: String){
+    fun searchUser(username: String){
         showSearchProgressBar(true)
         showError(false)
         try {

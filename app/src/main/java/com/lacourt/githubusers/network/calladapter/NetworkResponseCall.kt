@@ -1,6 +1,7 @@
 package com.lacourt.githubusers.network.calladapter
 
 import com.lacourt.githubusers.network.NetworkResponse
+import com.lacourt.githubusers.network.RequestError
 import okhttp3.Request
 import okhttp3.ResponseBody
 import okio.Timeout

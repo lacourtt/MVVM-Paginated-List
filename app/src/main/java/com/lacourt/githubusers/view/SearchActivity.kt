@@ -37,14 +37,14 @@ class SearchActivity : AppCompatActivity(), SearchAdapter.OnUserClick {
         binding.etSearch.setOnEditorActionListener { textView, i, keyEvent ->
             return@setOnEditorActionListener when (i) {
                 EditorInfo.IME_ACTION_SEARCH -> {
-                    viewModel.searchMovie(textView.text.toString())
+                    viewModel.searchUser(textView.text.toString())
                     true
                 }
                 else -> false
             }
         }
         binding.ivSearchIcon.setOnClickListener {
-            viewModel.searchMovie(binding.etSearch.text.toString())
+            viewModel.searchUser(binding.etSearch.text.toString())
         }
     }
 

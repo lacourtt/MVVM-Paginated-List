@@ -1,6 +1,9 @@
 package com.lacourt.githubusers.repository
 
 import com.lacourt.githubusers.network.GithubApiService
+import com.lacourt.githubusers.network.NetworkResponse
+import com.lacourt.githubusers.network.RequestError
+import com.lacourt.githubusers.network.dto.UserDetailsDTO
 
 open class Repository(private val service: GithubApiService) {
 

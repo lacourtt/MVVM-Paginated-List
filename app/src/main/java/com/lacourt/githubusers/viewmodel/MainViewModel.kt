@@ -8,6 +8,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.lacourt.githubusers.AppConstants
 import com.lacourt.githubusers.mapping.asDomainModel
 import com.lacourt.githubusers.model.UserDetails
 import com.lacourt.githubusers.model.UserListed
@@ -40,13 +41,13 @@ class MainViewModel(private val repository: Repository): ViewModel() {
                     _userDetails.postValue(response.body.asDomainModel())
                 }
                 is ApiError -> {
-                    _detailsError.postValue(response.body.message.toString())
+                    _detailsError.postValue(AppConstants.API_ERROR_MESSAGE)
                 }
                 is NetworkError -> {
-                    _detailsError.postValue(response.error.localizedMessage)
+                    _detailsError.postValue(AppConstants.NETWORK_ERROR_MESSAGE)
                 }
                 is UnknownError -> {
-                    _detailsError.postValue(response.error?.localizedMessage)
+                    _detailsError.postValue(AppConstants.UNKNOWN_ERROR_MESSAGE)
                 }
             }
         }
