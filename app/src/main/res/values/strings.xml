@@ -8,4 +8,5 @@
     <string name="search_no_results">Nenhum usuário encontrado</string>
     <string name="search_users">Buscar usuarios  </string>
     <string name="search_error">Erro :( verifique sua conexão e tente novamente</string>
+    <string name="user_list_screen_retry">Recarregar</string>
 </resources>

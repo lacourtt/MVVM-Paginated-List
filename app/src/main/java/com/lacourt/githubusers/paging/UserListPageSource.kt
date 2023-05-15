@@ -2,6 +2,7 @@ package com.lacourt.githubusers.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.lacourt.githubusers.AppConstants
 import com.lacourt.githubusers.mapping.asDomainModel
 import com.lacourt.githubusers.model.UserListed
 import com.lacourt.githubusers.network.GithubApiService
@@ -28,9 +29,9 @@ class UserListPageSource(private val repository: Repository) : PagingSource<Int,
                     nextKey = users.last().id
                 )
             }
-            is ApiError -> LoadResult.Error(Exception(response.body.message))
-            is NetworkError -> LoadResult.Error(java.lang.Exception("Network error"))
-            is UnknownError -> LoadResult.Error(java.lang.Exception("Unknown error"))
+            is ApiError -> LoadResult.Error(Exception(AppConstants.API_ERROR_MESSAGE))
+            is NetworkError -> LoadResult.Error(java.lang.Exception(AppConstants.NETWORK_ERROR_MESSAGE))
+            is UnknownError -> LoadResult.Error(java.lang.Exception(AppConstants.UNKNOWN_ERROR_MESSAGE))
         }
     }
 }

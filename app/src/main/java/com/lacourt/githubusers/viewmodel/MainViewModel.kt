@@ -6,20 +6,23 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.lacourt.githubusers.mapping.asDomainModel
 import com.lacourt.githubusers.model.UserDetails
+import com.lacourt.githubusers.model.UserListed
 import com.lacourt.githubusers.paging.UserListPageSource
 import com.lacourt.githubusers.repository.Repository
 import com.lacourt.githubusers.network.NetworkResponse.Success
 import com.lacourt.githubusers.network.NetworkResponse.ApiError
 import com.lacourt.githubusers.network.NetworkResponse.NetworkError
 import com.lacourt.githubusers.network.NetworkResponse.UnknownError
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val repository: Repository): ViewModel() {
 
-    val userList = Pager(PagingConfig(pageSize = 25, initialLoadSize = 25)) {
+    val userList : Flow<PagingData<UserListed>> = Pager(PagingConfig(pageSize = 25, initialLoadSize = 25)) {
         UserListPageSource(repository)
     }.flow.cachedIn(viewModelScope)
 
