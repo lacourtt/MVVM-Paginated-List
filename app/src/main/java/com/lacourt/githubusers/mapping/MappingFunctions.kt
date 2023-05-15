@@ -1,7 +1,9 @@
 package com.lacourt.githubusers.mapping
 
 import com.lacourt.githubusers.model.UserListed
+import com.lacourt.githubusers.network.dto.UserDetailsDTO
 import com.lacourt.githubusers.network.dto.UserListedDTO
+import com.lacourt.githubusers.model.UserDetails
 
 fun List<UserListedDTO>.asDomainModel() =
     map {
@@ -12,9 +14,12 @@ fun List<UserListedDTO>.asDomainModel() =
         )
     }
 
-fun UserListedDTO.asDomainModel() =
-    UserListed(
-        id = id,
-        login = login,
-        avatar_url = avatar_url
+fun UserDetailsDTO.asDomainModel() =
+    UserDetails(
+        avatar_url = avatar_url ?: "",
+        name = name ?: "---",
+        company = company ?: "",
+        location = location ?: "",
+        public_repos = public_repos,
+        followers = followers
     )

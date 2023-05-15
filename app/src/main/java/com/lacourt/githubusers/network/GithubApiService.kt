@@ -1,6 +1,6 @@
 package com.lacourt.githubusers.network
 
-import com.lacourt.githubusers.network.dto.UserDTO
+import com.lacourt.githubusers.network.dto.UserDetailsDTO
 import com.lacourt.githubusers.network.dto.UserListedDTO
 import com.lacourt.githubusers.network.dto.UserRepositoryDTO
 import retrofit2.http.GET
@@ -12,7 +12,7 @@ interface GithubApiService {
     suspend fun getUserList(@Query("since") since: Int, @Query("per_page") perPage: Int): NetworkResponse<List<UserListedDTO>, RequestError>
 
     @GET("users/{user}")
-    suspend fun getUser(@Path("user") user: String): NetworkResponse<UserDTO, RequestError>
+    suspend fun getUserDetails(@Path("user") user: String): NetworkResponse<UserDetailsDTO, RequestError>
 
     @GET("users/{user}/repos")
     suspend fun getUserRepoList(@Path("user") user: String): NetworkResponse<List<UserRepositoryDTO>, RequestError>

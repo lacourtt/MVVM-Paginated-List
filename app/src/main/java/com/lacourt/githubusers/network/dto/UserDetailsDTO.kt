@@ -1,6 +1,6 @@
 package com.lacourt.githubusers.network.dto
 
-data class UserDTO(
+data class UserDetailsDTO(
     val login: String,
     val id: Int,
     val node_id: String,

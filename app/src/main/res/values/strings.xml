@@ -2,4 +2,6 @@
     <string name="app_name">GithubUsers</string>
     <string name="user_list_try_again">Algo deu errado. Tente novamente.</string>
     <string name="user_list_retry_button">Recarregar</string>
+    <string name="details_public_repos">Public Repos</string>
+    <string name="details_followers">"Followers"</string>
 </resources>
