@@ -9,4 +9,6 @@ class Repository(private val service: GithubApiService) {
     suspend fun getUserDetails(username: String) = service.getUserDetails(username)
 
     suspend fun getUserRepoList(username: String) = service.getUserRepoList(username )
+
+    suspend fun searchUser(username: String) = service.searchUser(username)
 }

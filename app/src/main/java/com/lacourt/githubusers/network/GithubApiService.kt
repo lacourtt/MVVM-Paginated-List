@@ -1,5 +1,6 @@
 package com.lacourt.githubusers.network
 
+import com.lacourt.githubusers.network.dto.SearchResultDTO
 import com.lacourt.githubusers.network.dto.UserDetailsDTO
 import com.lacourt.githubusers.network.dto.UserListedDTO
 import com.lacourt.githubusers.network.dto.UserRepositoryDTO
@@ -16,4 +17,6 @@ interface GithubApiService {
 
     @GET("users/{user}/repos")
     suspend fun getUserRepoList(@Path("user") user: String): NetworkResponse<List<UserRepositoryDTO>, RequestError>
+    @GET("/search/users")
+    suspend fun searchUser(@Query("q") username: String): NetworkResponse<SearchResultDTO, RequestError>
 }

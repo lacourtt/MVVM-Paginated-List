@@ -46,8 +46,11 @@ class MainActivity : AppCompatActivity(), UserListPageAdapter.OnItemClickListene
                     userListAdapter.retry()
                 }
             )
-        }
 
+            tvSearchUsers.setOnClickListener {
+                startActivity(SearchActivity.newIntent(this@MainActivity))
+            }
+        }
     }
 
     override fun onItemClick(user: UserListed) {

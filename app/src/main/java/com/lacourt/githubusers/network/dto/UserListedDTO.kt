@@ -18,5 +18,6 @@ data class UserListedDTO(
     val events_url: String,
     val received_events_url: String,
     val type: String,
-    val site_admin: Boolean
+    val site_admin: Boolean,
+    val score: Double
 )

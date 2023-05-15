@@ -12,10 +12,16 @@
         tools:context=".view.MainActivity">
 
         <TextView
-            android:layout_width="match_parent"
+            android:id="@+id/tv_search_users"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30sp"
-            android:text="OPAAAAAAA"/>
+            android:textSize="14sp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingVertical="6dp"
+            android:paddingHorizontal="8dp"
+            android:text="@string/search_users"
+            app:drawableEndCompat="@drawable/ic_search_black_24dp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_users_list"
