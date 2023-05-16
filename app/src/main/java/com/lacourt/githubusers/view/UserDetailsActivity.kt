@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import com.lacourt.githubusers.databinding.ActivityUserDetailsBinding
 import com.lacourt.githubusers.viewmodel.MainViewModel
 import com.squareup.picasso.Picasso
@@ -26,6 +27,19 @@ class UserDetailsActivity : AppCompatActivity() {
                 tvCompany.text = it.company
                 tvFollowers.append("\n${it.followers.toString()}")
                 tvPublicRepos.append("\n${it.public_repos.toString()}")
+            }
+        }
+
+        viewModel.detailsError.observe(this) {
+            binding.tvDetailsError.visibility = View.VISIBLE
+            binding.tvDetailsError.text = it
+        }
+
+        binding.tvPublicRepos.setOnClickListener {
+            RepositoriesActivity.newIntent(
+                this, viewModel.userDetails.value?.public_repos,
+                intent.getStringExtra("login")!!)?.let{
+                startActivity(it)
             }
         }
 

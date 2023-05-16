@@ -4,6 +4,8 @@ import com.lacourt.githubusers.model.UserListed
 import com.lacourt.githubusers.network.dto.UserDetailsDTO
 import com.lacourt.githubusers.network.dto.UserListedDTO
 import com.lacourt.githubusers.model.UserDetails
+import com.lacourt.githubusers.model.UserRepository
+import com.lacourt.githubusers.network.dto.UserRepositoryDTO
 
 fun List<UserListedDTO>.asDomainModel() =
     map {
@@ -23,3 +25,13 @@ fun UserDetailsDTO.asDomainModel() =
         public_repos = public_repos,
         followers = followers
     )
+
+@JvmName("repositoryListAsDomainModel")
+fun List<UserRepositoryDTO>.asDomainModel() =
+    map {
+        UserRepository(
+            name = it.name,
+            fullName = it.fullName,
+            description = it.description
+        )
+    }

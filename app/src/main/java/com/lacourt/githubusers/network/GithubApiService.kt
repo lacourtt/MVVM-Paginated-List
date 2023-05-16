@@ -15,9 +15,9 @@ interface GithubApiService {
     @GET("users/{user}")
     suspend fun getUserDetails(@Path("user") user: String): NetworkResponse<UserDetailsDTO, RequestError>
 
-    @GET("users/{user}/repos")
-    suspend fun getUserRepoList(@Path("user") user: String): NetworkResponse<List<UserRepositoryDTO>, RequestError>
+    @GET("users/{user}/repos?per_page=25")
+    suspend fun getUserRepoList(@Path("user") user: String, @Query("page") page: Int): NetworkResponse<List<UserRepositoryDTO>, RequestError>
+
     @GET("/search/users")
     suspend fun searchUser(@Query("q") username: String): NetworkResponse<SearchResultDTO, RequestError>
-
 }

@@ -35,8 +35,8 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.test.ext:junit-ktx:1.1.5'
     def junit_version = "4.12"
+    def junit_ktx_version = "1.1.5"
     def mockito_version = "4.8.0"
     def mockito_kotlin_version = "2.1.0"
     def core_testing_version = "2.1.0"
@@ -47,6 +47,18 @@ dependencies {
     def espresso_contrib_version = "3.3.0"
     def core_ktx_test_version = "1.2.0"
 
+    def koin_version = "3.2.0"
+    def retrofit_version = "2.9.0"
+    def paging_version = "3.1.1"
+    def picasso_version = "2.71828"
+    def circle_imageview_version = "3.1.0"
+
+    def androidx_version = "1.7.0"
+    def appcompat_version = "1.6.1"
+    def material_version = "1.8.0"
+    def constraint_layout_version = "2.1.4"
+
+    implementation "androidx.test.ext:junit-ktx:$junit_ktx_version"
     testImplementation "junit:junit:$junit_version"
     testImplementation "org.mockito:mockito-core:$mockito_version"
     testImplementation "androidx.arch.core:core-testing:$core_testing_version"
@@ -56,17 +68,19 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$espresso_contrib_version"
     androidTestImplementation "androidx.test:core-ktx:$core_ktx_test_version"
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.8.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation "androidx.core:core-ktx:$androidx_version"
+    implementation "androidx.appcompat:appcompat:$appcompat_version"
+    implementation "com.google.android.material:material:$material_version"
+    implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
 
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
-    implementation "io.insert-koin:koin-android:3.2.0"
-    implementation "io.insert-koin:koin-core:3.2.0"
-    testImplementation "io.insert-koin:koin-test:3.2.0"
-    implementation "androidx.paging:paging-runtime:3.1.1"
-    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation "io.insert-koin:koin-android:$koin_version"
+    implementation "io.insert-koin:koin-core:$koin_version"
+    testImplementation "io.insert-koin:koin-test:$koin_version"
+    implementation "androidx.paging:paging-runtime:$paging_version"
+    implementation "com.squareup.picasso:picasso:$picasso_version"
+
+    implementation "de.hdodenhof:circleimageview:$circle_imageview_version"
 }

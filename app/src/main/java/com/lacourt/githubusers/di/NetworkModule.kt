@@ -4,9 +4,7 @@ import com.lacourt.githubusers.AppConstants
 import com.lacourt.githubusers.repository.Repository
 import com.lacourt.githubusers.network.GithubApiService
 import com.lacourt.githubusers.network.calladapter.NetworkResponseAdapterFactory
-import com.lacourt.githubusers.viewmodel.MainViewModel
 import okhttp3.Interceptor
-import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -30,7 +28,7 @@ fun providesInterceptor(): Interceptor {
 
         val newRequest = chain.request()
             .newBuilder()
-            .addHeader("Authorization", "Bearer ${AppConstants.TOKEN}")
+//            .addHeader("Authorization", "Bearer ${AppConstants.TOKEN}") // Insira sua chave do Github API, se necessário
             .url(newUrl)
             .build()
 

@@ -12,12 +12,14 @@ import com.lacourt.githubusers.AppConstants
 import com.lacourt.githubusers.mapping.asDomainModel
 import com.lacourt.githubusers.model.UserDetails
 import com.lacourt.githubusers.model.UserListed
+import com.lacourt.githubusers.model.UserRepository
 import com.lacourt.githubusers.paging.UserListPageSource
 import com.lacourt.githubusers.repository.Repository
 import com.lacourt.githubusers.network.NetworkResponse.Success
 import com.lacourt.githubusers.network.NetworkResponse.ApiError
 import com.lacourt.githubusers.network.NetworkResponse.NetworkError
 import com.lacourt.githubusers.network.NetworkResponse.UnknownError
+import com.lacourt.githubusers.paging.RepoListPageSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
@@ -26,6 +28,15 @@ class MainViewModel(private val repository: Repository): ViewModel() {
     val userList : Flow<PagingData<UserListed>> = Pager(PagingConfig(pageSize = 25, initialLoadSize = 25)) {
         UserListPageSource(repository)
     }.flow.cachedIn(viewModelScope)
+
+    val repositoryList : Flow<PagingData<UserRepository>> = Pager(PagingConfig(pageSize = 25, initialLoadSize = 25)) {
+        RepoListPageSource(repository, userName!!)
+    }.flow.cachedIn(viewModelScope)
+
+    private var userName: String? = null
+    fun setUserName(username: String) {
+        userName = username
+    }
 
     private val _userDetails = MutableLiveData<UserDetails>()
     val userDetails: LiveData<UserDetails> = _userDetails
