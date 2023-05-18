@@ -12,14 +12,14 @@ import com.lacourt.githubusers.network.NetworkResponse.NetworkError
 import com.lacourt.githubusers.network.NetworkResponse.UnknownError
 import com.lacourt.githubusers.repository.Repository
 
-class UserListPageSource(private val repository: Repository) : PagingSource<Int, UserListed>(){
+class UserListPageSource(private val service: GithubApiService) : PagingSource<Int, UserListed>(){
 
     override fun getRefreshKey(state: PagingState<Int, UserListed>): Int? {
         return null
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, UserListed> {
-        val response = repository.getUserList(params.key ?: 0, params.loadSize)
+        val response = service.getUserList(params.key ?: 0, params.loadSize)
         return when(response) {
             is Success -> {
                 val users = response.body.asDomainModel()

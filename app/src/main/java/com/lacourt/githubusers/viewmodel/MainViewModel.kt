@@ -13,7 +13,6 @@ import com.lacourt.githubusers.mapping.asDomainModel
 import com.lacourt.githubusers.model.UserDetails
 import com.lacourt.githubusers.model.UserListed
 import com.lacourt.githubusers.model.UserRepository
-import com.lacourt.githubusers.paging.UserListPageSource
 import com.lacourt.githubusers.repository.Repository
 import com.lacourt.githubusers.network.NetworkResponse.Success
 import com.lacourt.githubusers.network.NetworkResponse.ApiError
@@ -25,9 +24,16 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(private val repository: Repository): ViewModel() {
 
-    val userList : Flow<PagingData<UserListed>> = Pager(PagingConfig(pageSize = 25, initialLoadSize = 25)) {
-        UserListPageSource(repository)
-    }.flow.cachedIn(viewModelScope)
+    private val _userList = MutableLiveData<PagingData<UserListed>>()
+    val userList: LiveData<PagingData<UserListed>> = _userList
+
+    init {
+        viewModelScope.launch {
+            repository.userList.collect {
+                _userList.postValue(it)
+            }
+        }
+    }
 
     val repositoryList : Flow<PagingData<UserRepository>> = Pager(PagingConfig(pageSize = 25, initialLoadSize = 25)) {
         RepoListPageSource(repository, userName!!)

@@ -22,11 +22,15 @@ class MainActivity : AppCompatActivity(), UserListPageAdapter.OnItemClickListene
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        lifecycleScope.launchWhenCreated {
-            viewModel.userList.collect {
-                userListAdapter.submitData(it)
-            }
+        viewModel.userList.observe(this) {
+            userListAdapter.submitData(lifecycle, it)
         }
+
+//        lifecycleScope.launchWhenCreated {
+//            viewModel.userList.collect {
+//                userListAdapter.submitData(it)
+//            }
+//        }
 
         binding.apply {
             rvUsersList.apply {
@@ -34,6 +38,7 @@ class MainActivity : AppCompatActivity(), UserListPageAdapter.OnItemClickListene
                 adapter = userListAdapter
             }
 
+            // change to Lifecycle.repeatOnLifecycle
             lifecycleScope.launchWhenCreated {
                 userListAdapter.loadStateFlow.collect{
                     val state = it.refresh

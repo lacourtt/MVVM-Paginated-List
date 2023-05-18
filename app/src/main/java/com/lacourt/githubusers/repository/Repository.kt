@@ -1,10 +1,15 @@
 package com.lacourt.githubusers.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import com.lacourt.githubusers.network.GithubApiService
+import com.lacourt.githubusers.paging.UserListPageSource
 
 open class Repository(private val service: GithubApiService) {
 
-    suspend fun getUserList(since: Int, perPage: Int) = service.getUserList(since, perPage)
+    val userList = Pager(PagingConfig(pageSize = 25, initialLoadSize = 25)) {
+                UserListPageSource(service)
+    }.flow
 
     suspend fun getUserDetails(username: String) = service.getUserDetails(username)
 

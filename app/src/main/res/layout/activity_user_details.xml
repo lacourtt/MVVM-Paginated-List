@@ -90,6 +90,7 @@
         android:layout_height="0sp"
         android:background="@color/white"
         tools:text="Error Message"
+        android:visibility="gone"
         tools:visibility="gone"
         android:textSize="16sp"
         android:gravity="center"
