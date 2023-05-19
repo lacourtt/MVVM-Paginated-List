@@ -25,13 +25,13 @@ class MainActivity : AppCompatActivity(), UserListPageAdapter.OnItemClickListene
         setContentView(binding.root)
 
         setupRecyclerView(binding)
-        oberveUseList()
+        observeUserList()
         collectStateFlow(binding)
         setupSearchClickListener(binding)
         setupRetryClickListener(binding)
     }
 
-    private fun oberveUseList() {
+    private fun observeUserList() {
         viewModel.userList.observe(this) {
             userListAdapter.submitData(lifecycle, it)
         }
