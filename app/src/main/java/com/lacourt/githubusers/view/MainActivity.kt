@@ -24,29 +24,49 @@ class MainActivity : AppCompatActivity(), UserListPageAdapter.OnItemClickListene
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setupRecyclerView(binding)
+        oberveUseList()
+        collectStateFlow(binding)
+        setupSearchClickListener(binding)
+        setupRetryClickListener(binding)
+    }
+
+    private fun oberveUseList() {
         viewModel.userList.observe(this) {
             userListAdapter.submitData(lifecycle, it)
         }
+    }
 
+    private fun collectStateFlow(binding: ActivityMainBinding) {
+        // change to Lifecycle.repeatOnLifecycle
+        lifecycleScope.launch {
+            userListAdapter.loadStateFlow.collect{ state ->
+                val isEmpty = userListAdapter.itemCount == 0
+                // Show empty list
+                binding.llEmptyList.isVisible = isEmpty
+                binding.pbUserList.isVisible = state.refresh is LoadState.Loading
+            }
+        }
+    }
+
+    private fun setupRetryClickListener(binding: ActivityMainBinding) {
+        binding.btRetry.setOnClickListener {
+            userListAdapter.retry()
+        }
+    }
+
+    private fun setupSearchClickListener(binding: ActivityMainBinding) {
+        binding.tvSearchUsers.setOnClickListener {
+            startActivity(SearchActivity.newIntent(this@MainActivity))
+        }
+    }
+
+    private fun setupRecyclerView(binding: ActivityMainBinding) {
         binding.apply {
             rvUsersList.apply {
                 layoutManager = LinearLayoutManager(this@MainActivity)
                 adapter = userListAdapter
             }
-
-
-            // change to Lifecycle.repeatOnLifecycle
-            lifecycleScope.launch {
-                userListAdapter.loadStateFlow.collect{ state ->
-                    val isEmpty = userListAdapter.itemCount == 0
-
-                    // Show empty list
-                    llEmptyList.isVisible = isEmpty
-
-                    pbUserList.isVisible = state.refresh is LoadState.Loading
-                }
-            }
-
             val decoration = DividerItemDecoration(this@MainActivity, DividerItemDecoration.VERTICAL)
             rvUsersList.addItemDecoration(decoration)
             rvUsersList.adapter = userListAdapter.withLoadStateFooter(
@@ -54,15 +74,8 @@ class MainActivity : AppCompatActivity(), UserListPageAdapter.OnItemClickListene
                     userListAdapter.retry()
                 }
             )
-
-            tvSearchUsers.setOnClickListener {
-                startActivity(SearchActivity.newIntent(this@MainActivity))
-            }
-
-            btRetry.setOnClickListener {
-                userListAdapter.retry()
-            }
         }
+
     }
 
     override fun onItemClick(user: UserListed) {

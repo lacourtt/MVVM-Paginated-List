@@ -2,6 +2,7 @@ package com.lacourt.githubusers.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
@@ -32,6 +33,7 @@ class LoadMoreAdapter(private val retry: () -> Unit) : LoadStateAdapter<LoadMore
                 pbLoadMore.isVisible = state is LoadState.Loading
                 tvLoadMore.isVisible = state is LoadState.Error
                 btLoadMoreRetry.isVisible = state is LoadState.Error
+                if (state is LoadState.Error) tvLoadMore.text = state.error.message
             }
         }
     }
