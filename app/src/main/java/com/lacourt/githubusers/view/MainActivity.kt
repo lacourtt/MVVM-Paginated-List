@@ -5,11 +5,13 @@ import android.os.Bundle
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lacourt.githubusers.databinding.ActivityMainBinding
 import com.lacourt.githubusers.model.UserListed
 import com.lacourt.githubusers.paging.UserListPageAdapter
 import com.lacourt.githubusers.viewmodel.MainViewModel
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity(), UserListPageAdapter.OnItemClickListener {
@@ -26,26 +28,27 @@ class MainActivity : AppCompatActivity(), UserListPageAdapter.OnItemClickListene
             userListAdapter.submitData(lifecycle, it)
         }
 
-//        lifecycleScope.launchWhenCreated {
-//            viewModel.userList.collect {
-//                userListAdapter.submitData(it)
-//            }
-//        }
-
         binding.apply {
             rvUsersList.apply {
                 layoutManager = LinearLayoutManager(this@MainActivity)
                 adapter = userListAdapter
             }
 
+
             // change to Lifecycle.repeatOnLifecycle
-            lifecycleScope.launchWhenCreated {
-                userListAdapter.loadStateFlow.collect{
-                    val state = it.refresh
-                    pbUserList.isVisible = state is LoadState.Loading
+            lifecycleScope.launch {
+                userListAdapter.loadStateFlow.collect{ state ->
+                    val isEmpty = userListAdapter.itemCount == 0
+
+                    // Show empty list
+                    llEmptyList.isVisible = isEmpty
+
+                    pbUserList.isVisible = state.refresh is LoadState.Loading
                 }
             }
 
+            val decoration = DividerItemDecoration(this@MainActivity, DividerItemDecoration.VERTICAL)
+            rvUsersList.addItemDecoration(decoration)
             rvUsersList.adapter = userListAdapter.withLoadStateFooter(
                 LoadMoreAdapter{
                     userListAdapter.retry()
@@ -54,6 +57,10 @@ class MainActivity : AppCompatActivity(), UserListPageAdapter.OnItemClickListene
 
             tvSearchUsers.setOnClickListener {
                 startActivity(SearchActivity.newIntent(this@MainActivity))
+            }
+
+            btRetry.setOnClickListener {
+                userListAdapter.retry()
             }
         }
     }

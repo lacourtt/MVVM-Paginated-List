@@ -41,4 +41,31 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
 
+    <RelativeLayout
+        android:id="@+id/ll_empty_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/tv_empty_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:text="@string/user_list_empty"
+            android:background="@color/white"/>
+
+        <Button
+            android:id="@+id/bt_retry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/tv_empty_list"
+            android:text="@string/user_list_retry_button"/>
+    </RelativeLayout>
 </FrameLayout>
