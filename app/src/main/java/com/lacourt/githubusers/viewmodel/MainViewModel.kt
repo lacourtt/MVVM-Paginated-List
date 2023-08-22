@@ -24,16 +24,7 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(private val repository: Repository): ViewModel() {
 
-    private val _userList = MutableLiveData<PagingData<UserListed>>()
-    val userList: LiveData<PagingData<UserListed>> = _userList
-
-    init {
-        viewModelScope.launch {
-            repository.userList.collect {
-                _userList.postValue(it)
-            }
-        }
-    }
+    val userListFlow: Flow<PagingData<UserListed>> = repository.userList
 
     val repositoryList : Flow<PagingData<UserRepository>> = Pager(PagingConfig(pageSize = 25, initialLoadSize = 25)) {
         RepoListPageSource(repository, userName!!)

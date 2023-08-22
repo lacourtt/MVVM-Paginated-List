@@ -11,6 +11,7 @@ import com.lacourt.githubusers.databinding.ActivityMainBinding
 import com.lacourt.githubusers.model.UserListed
 import com.lacourt.githubusers.paging.UserListPageAdapter
 import com.lacourt.githubusers.viewmodel.MainViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -32,8 +33,10 @@ class MainActivity : AppCompatActivity(), UserListPageAdapter.OnItemClickListene
     }
 
     private fun observeUserList() {
-        viewModel.userList.observe(this) {
-            userListAdapter.submitData(lifecycle, it)
+        lifecycleScope.launch {
+            viewModel.userListFlow.collect {
+                userListAdapter.submitData(it)
+            }
         }
     }
 
