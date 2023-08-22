@@ -1,4 +1,7 @@
 # GithubUsers
+
+![](https://github.com/lacourtt/MVVM-Paginated-List/blob/compose/screenrecord.gif)
+
 Neste projeto você encontra:
 
 ## Arquitetura
